@@ -19,3 +19,19 @@ function randomFreelancer(NAMES, OCCUPATIONS, PRICE_RANGE) {
     PRICE_RANGE.min;
   return { name, occupation, rate };
 }
+
+function averageRate(freelancers) {
+  if (freelancers.length === 0) return 0;
+  {
+    const rateSum = freelancers.reduce(
+      (accumlator, freelancer) => accumlator + freelancer,
+      0
+    );
+    return rateSum / freelancers.length;
+  }
+}
+
+// function freelancerTable() {
+//   const header = document.createElement("header");
+//   const table = document.createElement("table");
+// }
