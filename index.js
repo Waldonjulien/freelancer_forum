@@ -45,9 +45,9 @@ function freelancerRow(freelancer) {
 
 function freelancerTable(freelancers) {
   const table = document.createElement("table");
-
   const thead = document.createElement("thead");
   const headerRow = document.createElement("tr");
+
   ["Name", "Occupation", "Rate"].forEach((text) => {
     const th = document.createElement("th");
     th.textContent = text;
@@ -70,18 +70,17 @@ function renderFreelancer() {
   const freelancers = Array.from({ length: NUM_FREELANCERS }, () =>
     randomFreelancer(NAMES, OCCUPATIONS, PRICE_RANGE)
   );
+  const app = document.getElementById("app");
+  app.innerHTML = "";
+
+  const aveRate = document.createElement("h2");
+  aveRate.textContent = `Average Rate: $ ${averageRate(freelancers).toFixed(
+    2
+  )}`;
+  app.appendChild(aveRate);
+
   const table = freelancerTable(freelancers);
-  document.getElementById("app").appendChild(table);
-
-  function renderAverageRate(freelancers) {
-    const aveRate = document.createElement("h2");
-    aveRate.textContent = `Average Rate:  ${averageRate(freelancers).toFixed(
-      2
-    )}`;
-    document.getElementById("app").appendChild(aveRate);
-  }
-
-  renderAverageRate(freelancers);
+  app.appendChild(table);
 }
 
 renderFreelancer();
