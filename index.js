@@ -24,14 +24,64 @@ function averageRate(freelancers) {
   if (freelancers.length === 0) return 0;
   {
     const rateSum = freelancers.reduce(
-      (accumlator, freelancer) => accumlator + freelancer,
+      (accumlator, freelancer) => accumlator + freelancer.rate,
       0
     );
     return rateSum / freelancers.length;
   }
 }
 
-// function freelancerTable() {
-//   const header = document.createElement("header");
-//   const table = document.createElement("table");
-// }
+function freelancerRow(freelancer) {
+  const tr = document.createElement("tr");
+
+  ["name", "occupation", "rate"].forEach((key) => {
+    const td = document.createElement("td");
+    td.textContent = freelancer[key];
+    tr.appendChild(td);
+  });
+
+  return tr;
+}
+
+function freelancerTable(freelancers) {
+  const table = document.createElement("table");
+
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+  ["Name", "Occupation", "Rate"].forEach((text) => {
+    const th = document.createElement("th");
+    th.textContent = text;
+    headerRow.appendChild(th);
+  });
+
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  freelancers.forEach((freelancer) => {
+    tbody.appendChild(freelancerRow(freelancer));
+  });
+  table.appendChild(tbody);
+
+  return table;
+}
+
+function renderFreelancer() {
+  const freelancers = Array.from({ length: NUM_FREELANCERS }, () =>
+    randomFreelancer(NAMES, OCCUPATIONS, PRICE_RANGE)
+  );
+  const table = freelancerTable(freelancers);
+  document.getElementById("app").appendChild(table);
+
+  function renderAverageRate(freelancers) {
+    const aveRate = document.createElement("h2");
+    aveRate.textContent = `Average Rate:  ${averageRate(freelancers).toFixed(
+      2
+    )}`;
+    document.getElementById("app").appendChild(aveRate);
+  }
+
+  renderAverageRate(freelancers);
+}
+
+renderFreelancer();
